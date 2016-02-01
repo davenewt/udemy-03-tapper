@@ -9,17 +9,83 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    
+    // Properties
+    var maxTaps: Int = 0 // explicit declaration
+    var currentTaps = 0 // implicit declaration
+    
+    // Outlets
+    @IBOutlet weak var logoImg: UIImageView!
+    @IBOutlet weak var howManyTapsTxt: UITextField!
+    @IBOutlet weak var playBtn: UIButton!
+    
+    @IBOutlet weak var tapBtn: UIButton!
+    @IBOutlet weak var tapsLabel: UILabel!
+    
+    @IBAction func OnCoinTapped(sender: UIButton!) {
+        
+        // update coin taps by 1
+        // update label
+        // see if max taps has been reached
+        
+        currentTaps++
+        updateTapsLabel()
+        
+        if isGameOver() {
+            // need to restart
+            restartGame()
+            
+            
+            
+        }
+        
     }
+    
+    @IBAction func onPlayBtnPressed(sender: UIButton!) {
+        
+        if howManyTapsTxt.text != nil && howManyTapsTxt.text != "" {
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+            logoImg.hidden = true
+            playBtn.hidden = true
+            howManyTapsTxt.hidden = true
+            tapBtn.hidden = false
+            tapsLabel.hidden = false
+            
+            maxTaps = Int(howManyTapsTxt.text!)!
+            currentTaps = 0
+            
+            updateTapsLabel()
+        }
+        
     }
-
+    
+    func restartGame() {
+        
+        maxTaps = 0
+        howManyTapsTxt.text = ""
+        
+        logoImg.hidden = false
+        playBtn.hidden = false
+        howManyTapsTxt.hidden = false
+        tapBtn.hidden = true
+        tapsLabel.hidden = true
+        
+    }
+    
+    func isGameOver() -> Bool {
+        
+        if currentTaps >= maxTaps {
+            return true
+        }
+        return false
+        
+    }
+    
+    func updateTapsLabel() {
+        
+        tapsLabel.text = "\(currentTaps) Taps"
+    
+    }
 
 }
 
